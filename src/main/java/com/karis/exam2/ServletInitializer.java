@@ -1,4 +1,4 @@
-package com.karis.exam2.jpaBoard;
+package com.karis.exam2;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
