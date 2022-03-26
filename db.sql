@@ -25,6 +25,9 @@ title = '제목2',
 INSERT INTO article
 SET reg_date = NOW(),
 update_date = NOW(),
-title = '제목2',
-`body` = '내용2',
-`user_id` = '2';
+title = '제목3',
+`body` = '내용3',
+`user_id` = '3';
+
+SELECT *
+FROM article;
