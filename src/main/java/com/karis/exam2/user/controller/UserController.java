@@ -29,6 +29,19 @@ public class UserController {
         Optional<Article> article = articleRepository.findById(id);
         return article.get();
     }
+    @RequestMapping("doModify")
+    @ResponseBody
+    public Article showModify(long id, String title, String body) {
+        Article article = articleRepository.findById(id).get();
+        if(title != null){
+            article.setTitle(title);
+        }
+        if(body != null){
+            article.setBody(body);
+        }
+        articleRepository.save(article);
+        return article;
+    }
 
 
 
