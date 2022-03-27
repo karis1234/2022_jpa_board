@@ -36,12 +36,12 @@ public class UserController {
         Article article = articleRepository.findById(id).get();
         if(title != null){
             article.setTitle(title);
-            article.setUpdateDate(LocalDateTime.now());
         }
         if(body != null){
             article.setBody(body);
-            article.setUpdateDate(LocalDateTime.now());
         }
+        article.setUpdateDate(LocalDateTime.now());
+
         articleRepository.save(article);
         return article;
     }
