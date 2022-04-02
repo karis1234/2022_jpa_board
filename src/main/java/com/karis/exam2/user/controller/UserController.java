@@ -1,7 +1,9 @@
 package com.karis.exam2.user.controller;
 
 import com.karis.exam2.user.dao.ArticleRepository;
+import com.karis.exam2.user.dao.UserRepository;
 import com.karis.exam2.user.domain.Article;
+import com.karis.exam2.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping("list")
     @ResponseBody
@@ -55,26 +59,32 @@ public class UserController {
         articleRepository.deleteById(id);
         return "%d번 게시물이 삭제되었습니다.".formatted(id);
     }
-    @RequestMapping("writer")
+    @RequestMapping("doWrite")
     @ResponseBody
-    public String writer(long id,String title, String body) {
-        Article article = articleRepository.findById(id).get();
-        if(title == null){
-            return "%d번 게시물 제목이 없습니다.".formatted(id);
+    public String doWrite(String title, String body) {
+        if ( title == null || title.trim().length() == 0 ) {
+            return "제목을 입력해주세요.";
         }
-        if(body == null){
-            return "%d번 게시물 내용이 없습니다.".formatted(id);
+
+        title = title.trim();
+
+        if ( body == null || body.trim().length() == 0 ) {
+            return "내용을 입력해주세요.";
         }
-        if(title != null){
-            article.setTitle(title);
-        }
-        if(body != null){
-            article.setBody(body);
-        }
+
+        body = body.trim();
+
+        Article article = new Article();
+        article.setRegDate(LocalDateTime.now());
         article.setUpdateDate(LocalDateTime.now());
+        article.setTitle(title);
+        article.setBody(body);
+        User user = userRepository.findById(1L).get();
+        article.setUser(user);
 
         articleRepository.save(article);
-        return "%d번 게시물이 추가되었습니다.".formatted(id);
+
+        return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
     }
 
 

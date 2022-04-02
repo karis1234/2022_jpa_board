@@ -1,5 +1,6 @@
 package com.karis.exam2.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class User {
     private LocalDateTime regDate;
     private LocalDateTime updateDate;
     private String email;
-    private String password;
     private String name;
+    @JsonIgnore
+    private String password;
 }

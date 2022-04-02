@@ -20,6 +20,5 @@ public class Article {
     private String body;
     @ManyToOne
     private User user;
-
 }
 
