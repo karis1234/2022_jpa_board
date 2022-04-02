@@ -1,25 +1,25 @@
 package com.karis.exam2.user.domain;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-public class Article {
+
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDateTime regDate;
     private LocalDateTime updateDate;
-    private String title;
-    private String body;
-    @ManyToOne
-    private User user;
-
+    private String email;
+    private String password;
+    private String name;
 }
-
