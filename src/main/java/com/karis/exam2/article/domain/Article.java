@@ -1,6 +1,6 @@
-package com.karis.exam2.user.domain;
+package com.karis.exam2.article.domain;
 
-
+import com.karis.exam2.user.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,4 +21,3 @@ public class Article {
     @ManyToOne
     private User user;
 }
-
