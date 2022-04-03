@@ -82,6 +82,17 @@ public class UserController {
 
         return "%s님 환영합니다.".formatted(user.get().getName());
     }
+    @RequestMapping("me")
+    @ResponseBody
+    public User showMe(String email, String password){
+        Optional<User> user = userRepository.findById(1L);
+
+        if(user.isEmpty()){
+            return null;
+        }
+
+        return user.get();
+    }
 
 }
 
