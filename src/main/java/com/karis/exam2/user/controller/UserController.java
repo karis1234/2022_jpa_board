@@ -63,7 +63,9 @@ public class UserController {
 
         email = email.trim();
 
-        Optional<User> user = userRepository.findByEmail(email);
+        // User user = userRepository.findByEmail(email).orElse(null); // 방법1
+        Optional<User> user = userRepository.findByEmail(email); // 방법2
+        //대신 Optional을 사용하면 getxxx()앞에 get()을 꼭 넣어야한다.
         if ( user.isEmpty() ) {
             return "일치하는 회원이 존재하지 않습니다.";
         }
