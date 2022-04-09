@@ -1,4 +1,5 @@
 package com.karis.exam2.article.controller;
+
 import com.karis.exam2.article.dao.ArticleRepository;
 import com.karis.exam2.article.domain.Article;
 import com.karis.exam2.user.dao.UserRepository;
@@ -26,15 +27,8 @@ public class ArticleController {
     public String showList(Model model) {
         List<Article> articles = articleRepository.findAll();
 
-        model.addAttribute("articles",articles);
+        model.addAttribute("articles", articles);
         return "usr/article/list";
-    }
-
-    @RequestMapping("detail")
-    @ResponseBody
-    public Article showDetail(long id) {
-        Optional<Article> article = articleRepository.findById(id);
-        return article.get();
     }
 
     @RequestMapping("doModify")
@@ -42,11 +36,11 @@ public class ArticleController {
     public Article doModify(long id, String title, String body) {
         Article article = articleRepository.findById(id).get();
 
-        if ( title != null ) {
+        if (title != null) {
             article.setTitle(title);
         }
 
-        if ( body != null ) {
+        if (body != null) {
             article.setBody(body);
         }
 
@@ -60,7 +54,7 @@ public class ArticleController {
     @RequestMapping("doDelete")
     @ResponseBody
     public String doDelete(long id) {
-        if ( articleRepository.existsById(id) == false ) {
+        if (articleRepository.existsById(id) == false) {
             return "%d번 게시물은 이미 삭제되었거나 존재하지 않습니다.".formatted(id);
         }
 
@@ -71,13 +65,13 @@ public class ArticleController {
     @RequestMapping("doWrite")
     @ResponseBody
     public String doWrite(String title, String body) {
-        if ( title == null || title.trim().length() == 0 ) {
+        if (title == null || title.trim().length() == 0) {
             return "제목을 입력해주세요.";
         }
 
         title = title.trim();
 
-        if ( body == null || body.trim().length() == 0 ) {
+        if (body == null || body.trim().length() == 0) {
             return "내용을 입력해주세요.";
         }
 
@@ -104,5 +98,15 @@ public class ArticleController {
     @RequestMapping("write")
     public String showWrite() {
         return "usr/article/write";
+    }
+
+    @RequestMapping("detail")
+    public String showDetail(long id, Model model) {
+        Optional<Article> opArticle = articleRepository.findById(id);
+        Article article = opArticle.get();
+
+        model.addAttribute("article", article);
+
+        return "usr/article/detail";
     }
 }
