@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{usr/common/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>게시물 목록</title>
+    <title>게시물 리스트</title>
 </head>
-<body>
-<div>
-    <a href="write">글쓰기</a> / <a href="list" style="color:red;">글 리스트</a>
-</div>
-<h1>게시물 목록</h1>
-<ul>
-    <li th:each="article: ${articles}">
-        <a th:href="@{detail(id=${article.id})}">
-            [[${article.id}]] / [[${article.title}]] / [[${article.regDate}]]
-        </a>
-    </li>
-</ul>
+
+<main layout:fragment="main">
+    <ul>
+        <li th:each="article: ${articles}">
+            <a th:href="@{detail(id=${article.id})}">
+                [[${article.id}]] / [[${article.title}]] / [[${article.regDate}]]
+            </a>
+        </li>
+    </ul>
 
 
-</body>
+</main>
+
 </html>
