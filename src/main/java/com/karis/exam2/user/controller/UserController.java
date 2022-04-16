@@ -39,23 +39,6 @@ public class UserController {
 
         return "로그아웃 되었습니다.";
     }
-    @RequestMapping("Login")
-    public String doLogin(HttpSession session, Model model) {
-        boolean isLogined = false;
-        long loginedUserId = 0;
-
-        if (session.getAttribute("loginedUserId") != null) {
-            isLogined = true;
-            loginedUserId = (long) session.getAttribute("loginedUserId");
-        }
-
-        if (isLogined == false) {
-            model.addAttribute("msg", "이미 로그인 되었습니다..");
-            model.addAttribute("historyBack", true);
-            return "common/js";
-        }
-        return "usr/user/login";
-    }
     @RequestMapping("doJoin")
     @ResponseBody
     public String doJoin(String name, String email, String password) {
@@ -94,6 +77,8 @@ public class UserController {
 
         return "%d번 회원이 생성되었습니다.".formatted(user.getId());
     }
+
+
     @RequestMapping("doLogin")
     @ResponseBody
     public String doLogin(String email, String password, HttpServletRequest req, HttpServletResponse resp){
@@ -128,6 +113,27 @@ public class UserController {
 
         return "%s님 환영합니다.".formatted(user.get().getName());
     }
+
+    @RequestMapping("Login")
+    public String showLogin(HttpSession session, Model model) {
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined) {
+            model.addAttribute("msg", "이미 로그인 되었습니다.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
+        return "usr/user/login";
+    }
+
+
     @RequestMapping("me")
     @ResponseBody
     public User showMe(HttpSession session){
