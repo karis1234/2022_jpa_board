@@ -7,7 +7,7 @@
 
 <main layout:fragment="main">
     <ul>
-        <li th:each="article: ${articles}">
+        <li th:each="article: ${articles}" class ="container mx-auto pb-[10px] link">
             <a th:href="@{detail(id=${article.id})}">
                 [[${article.id}]] / [[${article.title}]] / [[${article.regDate}]]
             </a>

@@ -43,13 +43,23 @@ public class UserController {
     @ResponseBody
     public String doJoin(String name, String email, String password) {
         if ( name == null || name.trim().length() == 0 ) {
-            return "이름을 입력해주세요.";
+            return """
+                    <script>
+                    alert('이름을 입력해주세요.');
+                    location.replace('join')
+                    </script>
+                    """;
         }
 
         name = name.trim();
 
         if ( email == null || email.trim().length() == 0 ) {
-            return "이메일을 입력해주세요.";
+            return """
+                    <script>
+                    alert('이메일을 입력해주세요.');
+                    location.replace('join')
+                    </script>
+                    """;
         }
 
         email = email.trim();
@@ -57,11 +67,21 @@ public class UserController {
         boolean existsByEmail = userRepository.existsByEmail(email);
 
         if ( existsByEmail ) {
-            return "입력하신 이메일(%s)은 이미 사용중입니다.".formatted(email);
+            return """
+                    <script>
+                    alert('입력하신 이메일(%s)은 이미 사용중입니다.');
+                    location.replace('join')
+                    </script>
+                    """.formatted(email);
         }
 
         if ( password == null || password.trim().length() == 0 ) {
-            return "비밀번호를 입력해주세요.";
+            return """
+                    <script>
+                    alert('비밀번호를 입력해주세요.');
+                    location.replace('join')
+                    </script>
+                    """;
         }
 
         password = password.trim();
@@ -75,7 +95,31 @@ public class UserController {
 
         userRepository.save(user);
 
-        return "%d번 회원이 생성되었습니다.".formatted(user.getId());
+        return """
+                    <script>
+                    alert('%s번 회원이 생성되었습니다.');
+                    location.replace('login')
+                    </script>
+                    """ .formatted(user.getId());
+    }
+
+    @RequestMapping("join")
+    public String showJoin(HttpSession session, Model model) {
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined) {
+            model.addAttribute("msg", "이미 로그인 되었습니다.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
+        return "usr/user/join";
     }
 
     @RequestMapping("doLogin")
@@ -133,7 +177,7 @@ public class UserController {
         return """
                     <script>
                     alert('%s님 환영합니다.');
-                    history.back();
+                    location.replace('/usr/article/list')
                     </script>
                     """ .formatted(user.get().getName());
     }
